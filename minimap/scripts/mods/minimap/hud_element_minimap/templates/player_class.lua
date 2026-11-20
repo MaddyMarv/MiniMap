@@ -7,314 +7,317 @@ local settings = mod:io_dofile("minimap/scripts/mods/minimap/hud_element_minimap
 local template = {}
 
 template.create_widget_definition = function(settings, scenegraph_id)
-    return UIWidget.create_definition({
-        {
-            style_id = "icon",
-            pass_type = "text",
-            value_id = "icon_text",
-            value = "",
-            style = {
-                horizontal_alignment = "center",
-                vertical_alignment = "center",
-                text_vertical_alignment = "center",
-                text_horizontal_alignment = "center",
-                drop_shadow = true,
-                font_type = "proxima_nova_bold",
-                font_size = 18,
-                text_color = Color.ui_hud_green_light(255, true),
-                default_text_color = Color.ui_hud_green_light(255, true),
-                size = settings.icon_size
-            },
-            visibility_function = function(content)
-                return not content.show_companion_icon
-            end
-        },
-        {
-            style_id = "companion_icon",
-            pass_type = "texture",
-            value_id = "companion_icon_texture",
-            value = "content/ui/materials/icons/throwables/hud/adamant_whistle",
-            style = {
-                horizontal_alignment = "center",
-                vertical_alignment = "center",
-                size = settings.icon_size,
-                offset = {0, 0, 0}
-            },
-            visibility_function = function(content)
-                return content.show_companion_icon
-            end
-        },
-        {
-            style_id = "distance_text",
-            pass_type = "text",
-            value_id = "distance_text",
-            value = "",
-            style = {
-                horizontal_alignment = "center",
-                vertical_alignment = "center",
-                text_vertical_alignment = "center",
-                text_horizontal_alignment = "center",
-                drop_shadow = true,
-                font_type = "proxima_nova_bold",
-                font_size = 12,
-                text_color = Color.white(255, true),
-                offset = { 0, 0, 1 },
-                size = { 100, 20 }
-            }
-        },
-        {
-            style_id = "vertical_arrow_overlay",
-            pass_type = "text",
-            value_id = "vertical_arrow_overlay",
-            value = "",
-            style = {
-                horizontal_alignment = "center",
-                vertical_alignment = "center",
-                text_vertical_alignment = "center",
-                text_horizontal_alignment = "center",
-                drop_shadow = true,
-                font_type = "proxima_nova_bold",
-                font_size = 20,
-                text_color = { 255, 255, 255, 255 },
-                offset = { 0, 0, 50 },
-                size = { 40, 40 }
-            },
-        },
-    }, scenegraph_id)
+	return UIWidget.create_definition({
+		{
+			style_id = "icon",
+			pass_type = "text",
+			value_id = "icon_text",
+			value = "",
+			style = {
+				horizontal_alignment = "center",
+				vertical_alignment = "center",
+				text_vertical_alignment = "center",
+				text_horizontal_alignment = "center",
+				drop_shadow = true,
+				font_type = "proxima_nova_bold",
+				font_size = 18,
+				text_color = Color.ui_hud_green_light(255, true),
+				default_text_color = Color.ui_hud_green_light(255, true),
+				size = settings.icon_size,
+			},
+			visibility_function = function(content)
+				return not content.show_companion_icon
+			end,
+		},
+		{
+			style_id = "companion_icon",
+			pass_type = "texture",
+			value_id = "companion_icon_texture",
+			value = "content/ui/materials/icons/throwables/hud/adamant_whistle",
+			style = {
+				horizontal_alignment = "center",
+				vertical_alignment = "center",
+				size = settings.icon_size,
+				offset = { 0, 0, 0 },
+			},
+			visibility_function = function(content)
+				return content.show_companion_icon
+			end,
+		},
+		{
+			style_id = "distance_text",
+			pass_type = "text",
+			value_id = "distance_text",
+			value = "",
+			style = {
+				horizontal_alignment = "center",
+				vertical_alignment = "center",
+				text_vertical_alignment = "center",
+				text_horizontal_alignment = "center",
+				drop_shadow = true,
+				font_type = "proxima_nova_bold",
+				font_size = 12,
+				text_color = Color.white(255, true),
+				offset = { 0, 0, 1 },
+				size = { 100, 20 },
+			},
+		},
+		{
+			style_id = "vertical_arrow_overlay",
+			pass_type = "text",
+			value_id = "vertical_arrow_overlay",
+			value = "",
+			style = {
+				horizontal_alignment = "center",
+				vertical_alignment = "center",
+				text_vertical_alignment = "center",
+				text_horizontal_alignment = "center",
+				drop_shadow = true,
+				font_type = "proxima_nova_bold",
+				font_size = 20,
+				text_color = { 255, 255, 255, 255 },
+				offset = { 0, 0, 50 },
+				size = { 40, 40 },
+			},
+		},
+	}, scenegraph_id)
 end
 
 template.update_function = function(widget, marker, x, y, vertical_distance, range, is_out_of_range)
-    if widget and widget.style and widget.style.vertical_arrow_overlay then
-        widget.style.vertical_arrow_overlay.visible = false
-    end
-    local icon = widget.style.icon
-    local companion_icon_style = widget.style.companion_icon
-    icon.offset[1] = x
-    icon.offset[2] = y
-    companion_icon_style.offset[1] = x
-    companion_icon_style.offset[2] = y
+	if widget and widget.style and widget.style.vertical_arrow_overlay then
+		widget.style.vertical_arrow_overlay.visible = false
+	end
+	local icon = widget.style.icon
+	local companion_icon_style = widget.style.companion_icon
+	icon.offset[1] = x
+	icon.offset[2] = y
+	companion_icon_style.offset[1] = x
+	companion_icon_style.offset[2] = y
 
-    local data = marker.data
-    if not data or rawget(data, "__deleted") or not data.slot then
-        return
-    end
-    local player_slot = data:slot()
-    local unit = data.player_unit
+	local data = marker.data
+	if not data or rawget(data, "__deleted") or not data.slot then
+		return
+	end
+	local player_slot = data:slot()
+	local unit = data.player_unit
 
-    local template_name = marker.template and marker.template.name
-    local is_companion_marker = (template_name == "nameplate_companion" or template_name == "nameplate_companion_hub")
+	local template_name = marker.template and marker.template.name
+	local is_companion_marker = (template_name == "nameplate_companion" or template_name == "nameplate_companion_hub")
 
-    local is_companion = false
-    local owner_player = nil
-    if unit then
-        local unit_data_extension = ScriptUnit.has_extension(unit, "unit_data_system")
-        if unit_data_extension then
-            local breed = unit_data_extension:breed()
-            if breed then
-                is_companion = (breed.tags and breed.tags.companion) or (breed.name == "companion_dog")
-            end
-        end
+	local is_companion = false
+	local owner_player = nil
+	if unit then
+		local unit_data_extension = ScriptUnit.has_extension(unit, "unit_data_system")
+		if unit_data_extension then
+			local breed = unit_data_extension:breed()
+			if breed then
+				is_companion = (breed.tags and breed.tags.companion) or (breed.name == "companion_dog")
+			end
+		end
 
-        if not is_companion and is_companion_marker then
-            is_companion = true
-        end
+		if not is_companion and is_companion_marker then
+			is_companion = true
+		end
 
-        if is_companion then
-            local player_unit_spawn_manager = Managers.state.player_unit_spawn
-            if player_unit_spawn_manager then
-                owner_player = player_unit_spawn_manager:owner(unit)
-                if owner_player and rawget(owner_player, "__deleted") then
-                    owner_player = nil
-                end
-            end
-        end
-    elseif is_companion_marker then
-        is_companion = true
-    end
+		if is_companion then
+			local player_unit_spawn_manager = Managers.state.player_unit_spawn
+			if player_unit_spawn_manager then
+				owner_player = player_unit_spawn_manager:owner(unit)
+				if owner_player and rawget(owner_player, "__deleted") then
+					owner_player = nil
+				end
+			end
+		end
+	elseif is_companion_marker then
+		is_companion = true
+	end
 
-    local game_mode_manager = Managers.state and Managers.state.game_mode
-    local is_in_hub = false
-    if game_mode_manager then
-        local game_mode_name = game_mode_manager:game_mode_name()
-        is_in_hub = (game_mode_name == "hub" or game_mode_name == "prologue_hub")
-    end
+	local game_mode_manager = Managers.state and Managers.state.game_mode
+	local is_in_hub = false
+	if game_mode_manager then
+		local game_mode_name = game_mode_manager:game_mode_name()
+		is_in_hub = (game_mode_name == "hub" or game_mode_name == "prologue_hub")
+	end
 
-    if is_companion then
-        local is_local_player_dog = false
-        if owner_player then
-            local local_player = Managers.player:local_player(1)
-            if local_player and owner_player:peer_id() == local_player:peer_id() then
-                is_local_player_dog = true
-            end
-        end
+	if is_companion then
+		local is_local_player_dog = false
+		if owner_player then
+			local local_player = Managers.player:local_player(1)
+			if local_player and owner_player:peer_id() == local_player:peer_id() then
+				is_local_player_dog = true
+			end
+		end
 
-        local show_own_dog = mod.settings and mod.settings.own_dog_vis ~= false
-        local show_teammate_dog = mod.settings and mod.settings.teammate_dog_vis ~= false
+		local show_own_dog = mod.settings and mod.settings.own_dog_vis ~= false
+		local show_teammate_dog = mod.settings and mod.settings.teammate_dog_vis ~= false
 
-        if (is_local_player_dog and show_own_dog) or (not is_local_player_dog and show_teammate_dog) then
-            local dog_icon_style = mod.settings and mod.settings.dog_icon_style or "dog_icon"
+		if (is_local_player_dog and show_own_dog) or (not is_local_player_dog and show_teammate_dog) then
+			local dog_icon_style = mod.settings and mod.settings.dog_icon_style or "dog_icon"
 
-            local target_slot = player_slot
-            local owner_profile = nil
-            if owner_player and not rawget(owner_player, "__deleted") then
-                target_slot = owner_player:slot()
-                owner_profile = owner_player:profile()
-            else
-                owner_player = nil
-            end
+			local target_slot = player_slot
+			local owner_profile = nil
+			if owner_player and not rawget(owner_player, "__deleted") then
+				target_slot = owner_player:slot()
+				owner_profile = owner_player:profile()
+			else
+				owner_player = nil
+			end
 
-            if dog_icon_style == "class_icon" and owner_profile then
-                widget.content.show_companion_icon = false
-                local archetype_name = owner_profile.archetype and owner_profile.archetype.name
-                local string_symbol = archetype_name and UISettings.archetype_font_icon[archetype_name] or "•"
-                widget.content.icon_text = string_symbol
+			if dog_icon_style == "class_icon" and owner_profile then
+				widget.content.show_companion_icon = false
+				local archetype_name = owner_profile.archetype and owner_profile.archetype.name
+				local string_symbol = archetype_name and UISettings.archetype_font_icon[archetype_name] or "•"
+				widget.content.icon_text = string_symbol
 
-                if is_in_hub then
-                    icon.text_color = Color.ui_hud_green_light(255, true)
-                else
-                    icon.text_color = UISettings.player_slot_colors[target_slot] or icon.default_text_color
-                end
-            elseif dog_icon_style == "unicode_icon" then
-                widget.content.show_companion_icon = false
-                widget.content.icon_text = "\u{E051}"
+				if is_in_hub then
+					icon.text_color = Color.ui_hud_green_light(255, true)
+				else
+					icon.text_color = UISettings.player_slot_colors[target_slot] or icon.default_text_color
+				end
+			elseif dog_icon_style == "unicode_icon" then
+				widget.content.show_companion_icon = false
+				widget.content.icon_text = "\u{E051}"
 
-                if is_in_hub then
-                    icon.text_color = Color.ui_hud_green_light(255, true)
-                else
-                    icon.text_color = UISettings.player_slot_colors[target_slot] or icon.default_text_color
-                end
-            else
-                widget.content.show_companion_icon = true
-                widget.content.companion_icon_texture = "content/ui/materials/icons/throwables/hud/adamant_whistle"
+				if is_in_hub then
+					icon.text_color = Color.ui_hud_green_light(255, true)
+				else
+					icon.text_color = UISettings.player_slot_colors[target_slot] or icon.default_text_color
+				end
+			else
+				widget.content.show_companion_icon = true
+				widget.content.companion_icon_texture = "content/ui/materials/icons/throwables/hud/adamant_whistle"
 
-                if is_in_hub then
-                    companion_icon_style.color = Color.ui_hud_green_light(255, true)
-                else
-                    local slot_color = UISettings.player_slot_colors[target_slot]
-                    if slot_color and type(slot_color) == "table" and #slot_color >= 4 then
-                        companion_icon_style.color = slot_color
-                    else
-                        companion_icon_style.color = Color.white(255, true)
-                    end
-                end
-            end
-        else
-            widget.content.show_companion_icon = false
-            widget.content.icon_text = ""
-        end
-    else
-        widget.content.show_companion_icon = false
-        local profile = data:profile()
-        local archetype_name = profile.archetype and profile.archetype.name
-        local string_symbol = archetype_name and UISettings.archetype_font_icon[archetype_name] or "•"
-        widget.content.icon_text = string_symbol
-        if is_in_hub then
-            icon.text_color = Color.ui_hud_green_light(255, true)
-        else
-            icon.text_color = UISettings.player_slot_colors[player_slot] or icon.default_text_color
-        end
-    end
+				if is_in_hub then
+					companion_icon_style.color = Color.ui_hud_green_light(255, true)
+				else
+					local slot_color = UISettings.player_slot_colors[target_slot]
+					if slot_color and type(slot_color) == "table" and #slot_color >= 4 then
+						companion_icon_style.color = slot_color
+					else
+						companion_icon_style.color = Color.white(255, true)
+					end
+				end
+			end
+		else
+			widget.content.show_companion_icon = false
+			widget.content.icon_text = ""
+		end
+	else
+		widget.content.show_companion_icon = false
+		local profile = data:profile()
+		local archetype_name = profile.archetype and profile.archetype.name
+		local string_symbol = archetype_name and UISettings.archetype_font_icon[archetype_name] or "•"
+		widget.content.icon_text = string_symbol
+		if is_in_hub then
+			icon.text_color = Color.ui_hud_green_light(255, true)
+		else
+			icon.text_color = UISettings.player_slot_colors[player_slot] or icon.default_text_color
+		end
+	end
 
+	local distance_text_style = widget.style.distance_text
+	distance_text_style.offset[1] = x
+	distance_text_style.offset[2] = y + (settings.icon_size[2] * 0.5) + 12
 
-    local distance_text_style = widget.style.distance_text
-    distance_text_style.offset[1] = x
-    distance_text_style.offset[2] = y + (settings.icon_size[2] * 0.5) + 12
+	local show_distance = nil
+	if is_companion then
+		show_distance = mod.settings and mod.settings.distance_markers and mod.settings.distance_markers.companions
+	else
+		show_distance = mod.settings and mod.settings.distance_markers and mod.settings.distance_markers.players
+	end
+	local only_out_of_range = mod.settings
+		and mod.settings.distance_markers
+		and mod.settings.distance_markers.only_out_of_range
+	local icon_visible = icon.visible ~= false or widget.content.show_companion_icon
+	local should_show_distance = show_distance and range and (not only_out_of_range or is_out_of_range) and icon_visible
+	local show_name = false
+	if is_companion then
+		show_name = mod.settings and mod.settings.display_names and mod.settings.display_names.display_name_companions
+	else
+		show_name = mod.settings and mod.settings.display_names and mod.settings.display_names.display_name_players
+	end
+	local should_show_name = show_name and icon_visible
 
-    local show_distance = nil
-    if is_companion then
-        show_distance = mod.settings and mod.settings.distance_markers and mod.settings.distance_markers.companions
-    else
-        show_distance = mod.settings and mod.settings.distance_markers and mod.settings.distance_markers.players
-    end
-    local only_out_of_range = mod.settings and mod.settings.distance_markers and mod.settings.distance_markers.only_out_of_range
-    local icon_visible = icon.visible ~= false or widget.content.show_companion_icon
-    local should_show_distance = show_distance and range and (not only_out_of_range or is_out_of_range) and icon_visible
-    local show_name = false
-    if is_companion then
-        show_name = mod.settings and mod.settings.display_names and mod.settings.display_names.display_name_companions
-    else
-        show_name = mod.settings and mod.settings.display_names and mod.settings.display_names.display_name_players
-    end
-    local should_show_name = show_name and icon_visible
+	widget.content.distance_text = ""
+	distance_text_style.visible = false
 
-    widget.content.distance_text = ""
-    distance_text_style.visible = false
+	local texts = {}
+	local vertical_str = ""
+	if mod and mod:get("distance_marker_vertical_symbols") then
+		local threshold = mod:get("distance_marker_vertical_threshold") or 2.5
+		local is_vertical_threshold_exceeded = false
+		if vertical_distance and vertical_distance > threshold then
+			vertical_str = "↑"
+			is_vertical_threshold_exceeded = true
+		elseif vertical_distance and vertical_distance < -threshold then
+			vertical_str = "↓"
+			is_vertical_threshold_exceeded = true
+		end
+		if is_vertical_threshold_exceeded then
+			local alpha = mod:get("distance_marker_vertical_transparency") or 180
+			if widget and widget.style then
+				for k, s in pairs(widget.style) do
+					if k ~= "vertical_arrow_overlay" then
+						if s and s.color and type(s.color) == "table" and #s.color >= 3 then
+							s.color = { alpha, s.color[2], s.color[3], s.color[4] }
+						end
+						if s and s.text_color and type(s.text_color) == "table" and #s.text_color >= 3 then
+							s.text_color = { alpha, s.text_color[2], s.text_color[3], s.text_color[4] }
+						end
+					end
+				end
+			end
+		end
+		local vertical_arrow_overlay_style = widget.style.vertical_arrow_overlay
+		if vertical_arrow_overlay_style then
+			if is_vertical_threshold_exceeded then
+				widget.content.vertical_arrow_overlay = vertical_str
+				vertical_arrow_overlay_style.offset[1] = x
+				vertical_arrow_overlay_style.offset[2] = y
+				vertical_arrow_overlay_style.offset[3] = 100
 
-    local texts = {}
-    local vertical_str = ""
-    if mod and mod:get("distance_marker_vertical_symbols") then
-        local threshold = mod:get("distance_marker_vertical_threshold") or 2.5
-        local is_vertical_threshold_exceeded = false
-        if vertical_distance and vertical_distance > threshold then
-            vertical_str = "↑"
-            is_vertical_threshold_exceeded = true
-        elseif vertical_distance and vertical_distance < -threshold then
-            vertical_str = "↓"
-            is_vertical_threshold_exceeded = true
-        end
-        if is_vertical_threshold_exceeded then
-            local alpha = mod:get("distance_marker_vertical_transparency") or 180
-            if widget and widget.style then
-                for k, s in pairs(widget.style) do
-                    if k ~= "vertical_arrow_overlay" then
-                        if s and s.color and type(s.color) == "table" and #s.color >= 3 then
-                            s.color = { alpha, s.color[2], s.color[3], s.color[4] }
-                        end
-                        if s and s.text_color and type(s.text_color) == "table" and #s.text_color >= 3 then
-                            s.text_color = { alpha, s.text_color[2], s.text_color[3], s.text_color[4] }
-                        end
-                    end
-                end
-            end
-        end
-        local vertical_arrow_overlay_style = widget.style.vertical_arrow_overlay
-        if vertical_arrow_overlay_style then
-            if is_vertical_threshold_exceeded then
-                widget.content.vertical_arrow_overlay = vertical_str
-                vertical_arrow_overlay_style.offset[1] = x
-                vertical_arrow_overlay_style.offset[2] = y
-                vertical_arrow_overlay_style.offset[3] = 100
-                
-                local a = mod:get("distance_marker_vertical_arrow_opacity")
-                if a == nil then a = 255 end
-                local c = mod:get("distance_marker_vertical_arrow_color") or {255, 255, 255, 255}
-                vertical_arrow_overlay_style.text_color = { a, c[2], c[3], c[4] }
-                vertical_arrow_overlay_style.font_size = mod:get("distance_marker_vertical_arrow_size") or 20
-                
-                vertical_arrow_overlay_style.visible = true
-            else
-                vertical_arrow_overlay_style.visible = false
-            end
-        end
-        vertical_str = ""
-    end
+				local a = mod:get("distance_marker_vertical_arrow_opacity")
+				if a == nil then
+					a = 255
+				end
+				local c = mod:get("distance_marker_vertical_arrow_color") or { 255, 255, 255, 255 }
+				vertical_arrow_overlay_style.text_color = { a, c[2], c[3], c[4] }
+				vertical_arrow_overlay_style.font_size = mod:get("distance_marker_vertical_arrow_size") or 20
 
-    if should_show_distance then
-        local distance_m = math.floor(range * 10) / 10
-        local distance_str = string.format("%.1fm", distance_m)
-        if vertical_str ~= "" then
-            distance_str = vertical_str .. " " .. distance_str
-        end
-        texts[#texts+1] = distance_str
-    elseif vertical_str ~= "" and icon_visible then
-        texts[#texts+1] = vertical_str
-    end
-    if should_show_name then
-        local name = nil
-        if is_companion and mod and mod.get_companion_display_name then
-            name = mod.get_companion_display_name(marker)
-        elseif not is_companion and mod and mod.get_player_display_name then
-            name = mod.get_player_display_name(marker)
-        end
-        if name then
-            texts[#texts+1] = name
-        end
-    end
+				vertical_arrow_overlay_style.visible = true
+			else
+				vertical_arrow_overlay_style.visible = false
+			end
+		end
+		vertical_str = ""
+	end
 
-    if #texts > 0 then
-        widget.content.distance_text = table.concat(texts, "\n")
-        distance_text_style.visible = true
-    end
+	if should_show_distance then
+		local distance_m = math.floor(range * 10) / 10
+		local distance_str = string.format("%.1fm", distance_m)
+		if vertical_str ~= "" then
+			distance_str = vertical_str .. " " .. distance_str
+		end
+		texts[#texts + 1] = distance_str
+	elseif vertical_str ~= "" and icon_visible then
+		texts[#texts + 1] = vertical_str
+	end
+	if should_show_name then
+		local name = nil
+		if is_companion and mod and mod.get_companion_display_name then
+			name = mod.get_companion_display_name(marker)
+		elseif not is_companion and mod and mod.get_player_display_name then
+			name = mod.get_player_display_name(marker)
+		end
+		if name then
+			texts[#texts + 1] = name
+		end
+	end
+
+	if #texts > 0 then
+		widget.content.distance_text = table.concat(texts, "\n")
+		distance_text_style.visible = true
+	end
 end
 
 return template
