@@ -382,9 +382,6 @@ function mod.classify_and_score_unit(unit)
 	then
 		breed_type = "shooters"
 		breed_priority = 300
-	else
-		breed_type = "chaff"
-		breed_priority = 100
 	end
 
 	local health_extension = ScriptUnit.has_extension(unit, "health_system")

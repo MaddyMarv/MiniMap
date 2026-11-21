@@ -7,7 +7,6 @@ local MinimapStrikemapGeometry = mod:io_dofile("minimap/scripts/mods/minimap/com
 
 local math_sin = math.sin
 local math_cos = math.cos
-local math_abs = math.abs
 local math_atan = math.atan
 local math_tan = math.tan
 local table_sort = table.sort

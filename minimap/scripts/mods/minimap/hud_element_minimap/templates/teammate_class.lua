@@ -173,7 +173,6 @@ template.update_function = function(widget, marker, x, y, vertical_distance, ran
 
 	local is_companion = false
 	local owner_player = nil
-	local owner_unit = nil
 	if unit then
 		local unit_data_extension = ScriptUnit.has_extension(unit, "unit_data_system")
 		if unit_data_extension then
@@ -193,9 +192,6 @@ template.update_function = function(widget, marker, x, y, vertical_distance, ran
 				owner_player = player_unit_spawn_manager:owner(unit)
 				if owner_player and rawget(owner_player, "__deleted") then
 					owner_player = nil
-				end
-				if owner_player then
-					owner_unit = owner_player.player_unit
 				end
 			end
 		end
@@ -279,8 +275,6 @@ template.update_function = function(widget, marker, x, y, vertical_distance, ran
 				if owner_player and not rawget(owner_player, "__deleted") then
 					target_slot = owner_player:slot()
 					owner_profile = owner_player:profile()
-				else
-					owner_player = nil
 				end
 
 				if dog_icon_style == "class_icon" and owner_profile then
@@ -351,7 +345,7 @@ template.update_function = function(widget, marker, x, y, vertical_distance, ran
 	distance_text_style.offset[1] = x
 	distance_text_style.offset[2] = y + (settings.icon_size[2] * 0.5) + text_y_offset
 
-	local show_distance = nil
+	local show_distance
 	if is_companion then
 		show_distance = mod.settings and mod.settings.distance_markers and mod.settings.distance_markers.companions
 	else
@@ -362,7 +356,7 @@ template.update_function = function(widget, marker, x, y, vertical_distance, ran
 		and mod.settings.distance_markers.only_out_of_range
 	local icon_visible = icon.visible ~= false or widget.content.show_status_icon or widget.content.show_companion_icon
 	local should_show_distance = show_distance and range and (not only_out_of_range or is_out_of_range) and icon_visible
-	local show_name = false
+	local show_name
 	if is_companion then
 		show_name = mod.settings and mod.settings.display_names and mod.settings.display_names.display_name_companions
 	else

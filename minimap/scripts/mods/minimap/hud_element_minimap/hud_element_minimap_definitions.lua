@@ -1,8 +1,6 @@
 local mod = get_mod("minimap")
 
 local UIWorkspaceSettings = require("scripts/settings/ui/ui_workspace_settings")
-local UIHudSettings = require("scripts/settings/ui/ui_hud_settings")
-local UISettings = require("scripts/settings/ui/ui_settings")
 local UIWidget = require("scripts/managers/ui/ui_widget")
 
 local settings = mod:io_dofile("minimap/scripts/mods/minimap/hud_element_minimap/hud_element_minimap_settings")

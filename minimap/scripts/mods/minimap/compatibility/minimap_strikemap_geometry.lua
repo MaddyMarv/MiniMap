@@ -4,7 +4,6 @@ local StrikemapCompatibility = mod:io_dofile("minimap/scripts/mods/minimap/compa
 local Color = Color
 local Gui = Gui
 local Quaternion = Quaternion
-local Vector2 = Vector2
 local Vector3 = Vector3
 local pairs = pairs
 local pcall = pcall
@@ -667,18 +666,6 @@ local function _band_color(prefix, fallback)
 	end
 
 	return Color(alpha, r, g, b)
-end
-
-local function _clamp_band_range(value, default_value)
-	value = tonumber(value) or default_value
-
-	if value < 1 then
-		value = 1
-	elseif value > 30 then
-		value = 30
-	end
-
-	return value
 end
 
 local function _draw_geometry(

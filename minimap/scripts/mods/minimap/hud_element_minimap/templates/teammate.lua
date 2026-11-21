@@ -256,7 +256,7 @@ template.update_function = function(widget, marker, x, y, vertical_distance, ran
 	distance_text_style.offset[1] = x
 	distance_text_style.offset[2] = y + (settings.icon_size[2] * 0.5) + text_y_offset
 
-	local show_distance = nil
+	local show_distance
 	if is_companion then
 		show_distance = mod.settings and mod.settings.distance_markers and mod.settings.distance_markers.companions
 	else
@@ -267,7 +267,7 @@ template.update_function = function(widget, marker, x, y, vertical_distance, ran
 		and mod.settings.distance_markers.only_out_of_range
 	local icon_visible = icon.visible ~= false or widget.content.show_status_icon
 	local should_show_distance = show_distance and range and (not only_out_of_range or is_out_of_range) and icon_visible
-	local show_name = false
+	local show_name
 	if is_companion then
 		show_name = mod.settings and mod.settings.display_names and mod.settings.display_names.display_name_companions
 	else
