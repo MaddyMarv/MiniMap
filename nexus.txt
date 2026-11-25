@@ -118,4 +118,4 @@ Customizable minimap tracking teammates and objectives. Compatible with Strike M
 [/spoiler]
 
 [b]Links:[/b]
-[url=https://github.com/MaddyMarv/MiniMap-Fixed-and-Improved-]Source Code[/url] | [url=https://www.nexusmods.com/profile/indicabunny]Nexus Mods Profile[/url] | [url=https://ko-fi.com/indicabunny]Support Me on Ko-fi[/url]
+[url=https://github.com/MaddyMarv/MiniMap]Source Code[/url] | [url=https://www.nexusmods.com/profile/indicabunny]Nexus Mods Profile[/url] | [url=https://ko-fi.com/indicabunny]Support Me on Ko-fi[/url]

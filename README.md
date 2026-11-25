@@ -121,4 +121,4 @@ Customizable minimap tracking teammates and objectives. Compatible with Strike M
 - `/minimap_debug` - Toggle minimap scan diagnostic logging
 </details>
 
-🔗 **Links:** [Source Code](https://github.com/MaddyMarv/MiniMap-Fixed-and-Improved-) | [Nexus Mods Profile](https://www.nexusmods.com/profile/indicabunny) | [Support Me on Ko-fi](https://ko-fi.com/indicabunny)
+🔗 **Links:** [Source Code](https://github.com/MaddyMarv/MiniMap) | [Nexus Mods Profile](https://www.nexusmods.com/profile/indicabunny) | [Support Me on Ko-fi](https://ko-fi.com/indicabunny)
