@@ -1,4 +1,4 @@
-### [Minimap Fixed and Improved](https://www.nexusmods.com/warhammer40kdarktide/mods/633)
+### [MiniMap (Fixed and Improved)](https://www.nexusmods.com/warhammer40kdarktide/mods/633)
 <img width="1689" height="476" alt="image" src="https://github.com/user-attachments/assets/1e5fcc37-66cf-463c-bf92-b1b7dfe93dd8" />
 
 Customizable minimap tracking teammates and objectives. Compatible with Strike Map.

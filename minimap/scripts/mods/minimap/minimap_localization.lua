@@ -1,6 +1,6 @@
 local loc = {
 	mod_name = {
-		en = "Minimap",
+		en = "MiniMap",
 		["zh-cn"] = "小地图",
 		ru = "Миникарта",
 	},
