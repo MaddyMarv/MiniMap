@@ -3,31 +3,118 @@ Customizable minimap tracking teammates and objectives. Compatible with Strike M
 [b]Mod Settings / Commands:[/b]
 [spoiler]
 [b]General[/b]
-- Toggle Minimap (Hotkey)
-- Minimap Size & Zoom
-- Minimap Shape [Circle, Square]
-- Minimap Opacity
-- Horizontal Alignment [Center, Left, Right]
-- Vertical Alignment [Center, Top, Bottom]
-- Rotate With Player & Center on Player
+
+[i]Style Settings[/i]
+- Horizontal alignment [Center, Left, Right]
+- Vertical alignment [Center, Top, Bottom]
+- X/Y Offset
+- Background Color
+- Background Opacity
+
+[i]Minimap Visibility[/i]
+- Show in Hub
+- Show in Shooting Range/Psykhanium
+- Show When Dead
 
 [b]Icons & Markers[/b]
-- Player & Teammate Icons (Show, Size, Colors)
-- Disabled Teammates [Show as normal (no status icons), Status icons only, Status icons + Health bar]
-- Dog Icon Style [Dog whistle, Dog icon]
-- Pickup Icons (Ammo, Medkits, Grimoires, Scriptures, Plasteel, Diamantine)
-- Objective Markers
+
+[i]Class Icon Settings[/i]
+- Display Class Icon
+
+[i]Icon Visibility[/i]
+- Attention Pings
+- Location Pings
+- Threat Area Pings
+- Threat Units
+- Companion Target Skull
+- Players
+- Mission Objectives
+- Tagged Interactions
+- Disabled Teammates [Show as normal (no status icons), Non-glowing icons (colored), Non-glowing icons with rings, Glowing icons with rings, Glowing icons without rings]
+- Hide bots
+- Teammate Facing Arrows
+
+[i]Distance Markers[/i]
+- Show Distance on Players / Dogs/Companions / Enemies / Objectives / Interactables / Pings
+- Only Show Distance When Out of Range
+
+[i]Vertical Distance Symbols[/i]
+- Show Vertical Symbols (↑/↓)
+- Vertical Distance Threshold (meters)
+- Vertical Distance Transparency (0-255)
+- Vertical Arrow Size
+- Vertical Arrow Color
+- Arrow Color (Alpha / Opacity)
+
+[i]Display Names[/i]
+- Show Player Names
+- Show Dog/Companion Names
+
+[i]Dog Settings[/i]
+- Dog Icon Style [Dog whistle, Class Icon, Unicode Icon]
+- Show Your Own Dog
+- Show Teammates' Dogs
 
 [b]Enemy Radar[/b]
-- Enable Enemy Radar & Range
-- Priority Mode [Threat (Type + Health), Distance, Health Only]
-- Radar Filter Options (Elites & Specials, Disablers, Monstrosities & Bosses, Normal Enemies)
-- Override Specific Enemy Coloring (Individual colors for all Specials & Elites)
+
+[i]Radar Settings[/i]
+- Enable Enemy Radar
+- Scan Range (meters)
+- Priority Mode [Threat (Type + Health), Distance (3D)]
+- Only Show Names If Pinged
+
+[i]Melee Range Ring[/i]
+- Show Melee Range Ring
+- Melee Range (meters)
+- Melee Ring Color
+- Melee Ring Opacity
+
+[i]Vertical Distance Transparency[/i]
+- Enable Vertical Distance Transparency
+- Vertical Distance Threshold (meters)
+- Transparency Alpha (0-255)
+
+[i]Enemy Grouping (Clustering)[/i]
+- Enable Enemy Grouping
+- Grouping Radius (meters)
+- Minimum Group Size
+- Show Enemy Type Text
+
+[i]Enemy Categories (each has Enable on Radar, Color, Radar Limit (0 = Unlimited), Show Name on Radar)[/i]
+- Human Bosses (Captains, Twins)
+- Monsters (Plague Ogryn, Chaos Spawn, Daemonhost)
+- Disablers (Hounds, Mutants, Trappers)
+- Ranged Specials (Snipers, Flamers, Bombers)
+- Poxbursters
+- Ranged Elites (Gunners, Shotgunners, Reapers)
+- Crushers & Maulers
+- Melee Elites (Ragers, Bulwarks)
+- Shooters (Dreg Stalker, Scab Shooter, Scab Stalker)
+- Chaff (Hordes, Roamers, Groaners, Poxwalkers)
+
+[i]Specific Enemy Colors (Specials & Elites)[/i]
+- Override Specific Enemy Coloring
+- Colors for Hound, Trapper, Mutant, Sniper, Flamer (Scab & Dreg), Bomber (Scab & Dreg), Poxburster, Crusher, Mauler, Gunner (Scab & Dreg), Plasma Gunner, Reaper, Shotgunner (Scab & Dreg), Rager (Scab & Dreg), Bulwark
 
 [b]Strike Map[/b]
-- Fullscreen Strike Map Toggle (Hotkey)
-- Strike Map Zoom & Pan
-- Strike Map Opacity
+
+[i]Strike Map Dimensions[/i]
+- Height
+- Half Height
+- Depth / Z-Offset
+
+[i]Line Thicknesses[/i]
+- Contours (Walls & Ledges)
+- Stairs (Stair Ticks)
+- Slopes (Incline Ink)
+
+[i]Floor Colors & Opacities[/i]
+- Floor Above (Color, Opacity)
+- Current Floor (Color, Opacity)
+- Floor Below (Color, Opacity)
+
+[b]Commands:[/b]
+- /minimap_debug - Toggle minimap scan diagnostic logging
 [/spoiler]
 
 [b]Links:[/b]
